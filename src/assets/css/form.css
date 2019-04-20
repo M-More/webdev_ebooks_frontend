@@ -1,0 +1,47 @@
+#app {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+body{
+  text-align: center;
+}
+
+#heading{
+  position: relative;
+}
+
+.head_nav_button{
+  padding-top: 40px;
+  padding-left: 5px;
+  padding-right: 15px;
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+  float: right;
+}
+
+#title{
+  font-size: 30px;
+  font-weight: bold;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#subtitle{
+  font-size: 20px;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 15px;
+}
+
+#form{
+  width: 45%;
+  margin: 0 auto;
+}

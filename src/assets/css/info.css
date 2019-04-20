@@ -1,0 +1,139 @@
+#app {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+#heading{
+  position: relative;
+}
+
+.head_nav_button{
+  padding-top: 40px;
+  padding-left: 5px;
+  padding-right: 15px;
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+  float: right;
+}
+
+a:link{
+  text-decoration: none;
+  color: black;
+}
+
+a:visited{
+  color: black;
+}
+
+a:hover{
+  color: #409EFF;
+}
+
+#title{
+  font-size: 30px;
+  font-weight: bold;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#subtitle{
+  font-size: 20px;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 15px;
+}
+
+.content{
+  width: 1170px;
+  height: auto;
+  float: left;
+  margin-top: 30px;
+  margin-left: 40px;
+}
+
+.title{
+  width: 1170px;
+  height: 35px;
+  border-bottom-style: solid;
+  border-bottom-color: #81baff;
+}
+
+.title_content{
+  background-color: #81baff;
+  color: white;
+  text-align: center;
+  width: 200px;
+  height: 35px;
+  font-size: 25px;
+}
+
+
+.buying{
+  width: 100%;
+  height: 500px;
+  background-color: snow;
+  margin-bottom: 20px;
+}
+
+.bookimg{
+  margin: 10px 10px 10px 10px;
+  float: left;
+}
+
+.bookinfo{
+  float: left;
+  margin-left: 20px;
+  margin-top: 10px;
+  line-height: 200%;
+}
+
+.bookname{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.bookname2{
+  font-size: 19px;
+}
+
+.price{
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+}
+
+.add_to_cart_button{
+  margin-top: 25px;
+}
+
+.search1{
+  height: 33px;
+  width: 50px;
+  background-color: #81baff;
+  font-size: 12px;
+  color: white;
+}
+
+.add{
+  height: 40px;
+  width: 100px;
+  background-color: #81baff;
+  font-size: 15px;
+  color: white;
+}
+
+.detail{
+  width: 1130px;
+  height: auto;
+  background-color: snow;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}

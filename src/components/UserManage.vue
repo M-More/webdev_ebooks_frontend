@@ -1,0 +1,82 @@
+<template>
+  <div id="usermanage">
+    <div id="heading">
+      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <p id="title">e-Book</p>
+        <p id="subtitle">用户管理</p>
+        <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="#">订单统计</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="#">书籍管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="#" @click="showUser">用户管理</a></el-button>
+      </el-menu>
+      <div class="line"></div>
+    </div>
+
+    <br/>
+
+    <el-input
+      v-model="search"
+      size="medium"
+      clearable
+      placeholder="输入用户关键字搜索用户">
+      <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    </el-input>
+
+    <el-table
+      :data="userData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      style="width: 100%">
+      <el-table-column
+        label="UID"
+        prop="id">
+      </el-table-column>
+      <el-table-column
+        label="用户名"
+        prop="name">
+      </el-table-column>
+      <el-table-column
+        label="邮箱"
+        prop="email">
+      </el-table-column>
+      <el-table-column
+        label="权限"
+        prop="kind">
+      </el-table-column>
+      <el-table-column
+        align="right" label="用户状态管理">
+        <template slot-scope="scope">
+          <el-switch
+            style="display: block"
+            v-model="scope.row.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="正常"
+            inactive-text="禁用">
+          </el-switch>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      userData: [],
+      search: ''
+    }
+  },
+  methods: {
+    showUser () {
+      this.$axios.get('/users/showAll')
+        .then((response) => {
+          this.userData = response.data
+        })
+    }
+  }
+}
+</script>
+
+<style>
+  @import "../assets/css/index.css";
+</style>

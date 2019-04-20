@@ -1,0 +1,94 @@
+#app {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+#heading{
+  position: relative;
+}
+
+.head_nav_button{
+  padding-top: 40px;
+  padding-left: 5px;
+  padding-right: 15px;
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+  float: right;
+}
+
+.view_list_button{
+  margin-top: 30px;
+  margin-left: 5px;
+  margin-right: 15px;
+  text-decoration: none;
+  font-size: 17px;
+  float: right;
+}
+
+a:link{
+  text-decoration: none;
+  color: black;
+}
+
+a:visited{
+  color: black;
+}
+
+a:hover{
+  color: #409EFF;
+}
+
+#title{
+  font-size: 30px;
+  font-weight: bold;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#subtitle{
+  font-size: 20px;
+  float: left;
+  color: #409EFF;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 15px;
+}
+
+.menuitem{
+  float: right;
+}
+
+#left_nav{
+  width: 20%;
+  float: left;
+  text-align: center;
+}
+
+#content{
+  width: 75%;
+  float: left;
+  font-size: 30px;
+}
+
+.book_content ul li{
+  list-style: none;
+  display: inline;
+}
+
+.book_content ul li a img {
+  margin: 0px 15px 10px 30px;
+}
+
+#a_reg a{
+  text-decoration: none;
+}
+
+#sumprice{
+  padding-right: 50px;
+  float: right;
+}
