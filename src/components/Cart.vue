@@ -1,9 +1,9 @@
 <template>
-  <div id="booklist">
+  <div id="app">
     <div id="heading">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
-        <p id="subtitle">书籍列表</p>
+        <p id="subtitle">购物车</p>
         <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="#">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
@@ -14,16 +14,8 @@
 
     <br/>
 
-    <el-input
-      v-model="search"
-      size="medium"
-      clearable
-      placeholder="输入书名关键字搜索书籍">
-      <i slot="prefix" class="el-input__icon el-icon-search"></i>
-    </el-input>
-
     <el-table
-      :data="bookData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="cartData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <!--<el-table-column label="封面">-->
         <!--<template slot-scope="scope">-->
@@ -32,23 +24,16 @@
       <!--</el-table-column>-->
       <el-table-column
         label="书名"
-        sortable
         prop="bookname">
       </el-table-column>
       <el-table-column
-        label="作者"
-        sortable
-        prop="author">
-      </el-table-column>
-      <el-table-column
         label="ISBN"
-        sortable
         prop="isbn">
       </el-table-column>
-      <el-table-column
-        label="库存"
-        sortable
-        prop="inventory">
+      <el-table-column label="数量">
+        <template slot-scope="scope">
+          <el-input-number v-model="scope.row.amount" controls-position="right" @change="handleChange(scope.$index, scope.row)" :min="1"></el-input-number>
+        </template>
       </el-table-column>
       <el-table-column
         align="right">
@@ -57,14 +42,21 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-          <el-button
-            size="mini"
             type="danger"
-            @click="addToCart(scope.$index, scope.row)">加入购物车</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="line"></div>
+    <div id="summary">
+      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <div id="sumprice" style="float: right">
+          <el-button type="primary">购买</el-button>
+        </div>
+      </el-menu>
+      <div class="line"></div>
+    </div>
   </div>
 </template>
 
@@ -72,36 +64,50 @@
 export default {
   data () {
     return {
-      bookData: [],
-      userNowId: null,
-      search: ''
+      search: '',
+      cartData: []
     }
   },
   mounted: function () {
-    this.show()
+    this.showCart()
   },
   methods: {
-    show () {
-      this.$axios.get('/books/showAll')
+    showCart () {
+      this.$axios.get('/cart/showAll')
         .then((response) => {
-          this.bookData = response.data
+          this.cartData = response.data
         })
     },
-    handleEdit (index, row) {
-      console.log(index, row)
+    handleDelete (index, row) {
+      this.$confirm('确定从购物车中删除该书本?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.get('/cart/delete', {
+          params: {
+            isbn: row.isbn
+          }
+        })
+        this.cartData.splice(index, 1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
-    addToCart (index, row) {
-      this.$axios.get('/cart/create', {
+    handleChange (index, row) {
+      this.$axios.get('/cart/update', {
         params: {
           cartName: row.bookname,
           cartIsbn: row.isbn,
-          cartAmount: 1
+          cartAmount: row.amount
         }
-      })
-      this.$message({
-        showClose: true,
-        message: '加入购物车成功',
-        type: 'success'
       })
     }
   }

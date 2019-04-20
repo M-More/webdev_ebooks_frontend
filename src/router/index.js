@@ -5,10 +5,12 @@ import BookList from '../components/BookList'
 import BookManage from '../components/BookManage'
 import UserManage from '../components/UserManage'
 import Register from '../components/Register'
+import Cart from '../components/Cart'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -34,6 +36,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     }
   ]
 })

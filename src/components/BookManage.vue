@@ -147,6 +147,9 @@ export default {
       editBookFormLabelWidth: '100px'
     }
   },
+  mounted: function () {
+    this.show()
+  },
   methods: {
     handleAdd () {
       this.addBookFormVisible = false
