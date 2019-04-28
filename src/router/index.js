@@ -6,6 +6,7 @@ import BookManage from '../components/BookManage'
 import UserManage from '../components/UserManage'
 import Register from '../components/Register'
 import Cart from '../components/Cart'
+import Orderlist from '../components/Orderlist'
 
 Vue.use(Router)
 
@@ -13,7 +14,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       component: Home
     },
@@ -41,6 +42,11 @@ export default new Router({
       path: '/cart',
       name: 'Cart',
       component: Cart
+    },
+    {
+      path: '/orderlist',
+      name: 'Orderlist',
+      component: Orderlist
     }
   ]
 })

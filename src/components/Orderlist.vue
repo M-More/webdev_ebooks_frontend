@@ -3,7 +3,7 @@
     <div id="heading">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
-        <p id="subtitle">购物车</p>
+        <p id="subtitle">我的订单</p>
         <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/orderlist">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
@@ -23,17 +23,16 @@
         <!--</template>-->
       <!--</el-table-column>-->
       <el-table-column
-        label="书名"
-        prop="bookname">
+        label="订单编号"
+        prop="num">
       </el-table-column>
       <el-table-column
-        label="ISBN"
-        prop="isbn">
+        label="下单用户"
+        prop="username">
       </el-table-column>
-      <el-table-column label="数量">
-        <template slot-scope="scope">
-          <el-input-number v-model="scope.row.amount" controls-position="right" @change="handleChange(scope.$index, scope.row)" :min="1"></el-input-number>
-        </template>
+      <el-table-column
+        label="下单时间"
+        prop="time">
       </el-table-column>
       <el-table-column
         align="right">
@@ -47,16 +46,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <div class="line"></div>
-    <div id="summary">
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <div id="sumprice" style="float: right">
-          <el-button type="primary" @click="buy">购买</el-button>
-        </div>
-      </el-menu>
-      <div class="line"></div>
-    </div>
   </div>
 </template>
 
@@ -69,11 +58,11 @@ export default {
     }
   },
   mounted: function () {
-    this.showCart()
+    this.showOrder()
   },
   methods: {
-    showCart () {
-      this.$axios.get('/cart/showAll')
+    showOrder () {
+      this.$axios.get('/order/findByUser')
         .then((response) => {
           this.cartData = response.data
         })
@@ -108,21 +97,6 @@ export default {
           cartIsbn: row.isbn,
           cartAmount: row.amount
         }
-      })
-    },
-    buy () {
-      this.$confirm('确定购买购物车中的书本?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$axios.get('/orderitem/create')
-        location.reload()
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消购买'
-        })
       })
     }
   }

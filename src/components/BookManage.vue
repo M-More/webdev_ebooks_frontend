@@ -23,7 +23,7 @@
     </el-input>
 
     <el-table
-      :data="bookData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="bookData.filter(data => !search || data.bookname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <!--<el-table-column label="封面">-->
       <!--<template slot-scope="scope">-->
@@ -81,11 +81,20 @@
         <el-form-item label="ISBN" :label-width="addBookFormLabelWidth">
           <el-input v-model="addBookForm.isbn" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="单价" :label-width="addBookFormLabelWidth">
-          <el-input v-model="addBookForm.price" autocomplete="off"></el-input>
+        <el-form-item label="出版社" :label-width="addBookFormLabelWidth">
+          <el-input v-model="addBookForm.press" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="开本" :label-width="addBookFormLabelWidth">
+          <el-input v-model="addBookForm.booksize" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="出版时间" :label-width="addBookFormLabelWidth">
+          <el-input v-model="addBookForm.pubtime" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="库存" :label-width="addBookFormLabelWidth">
           <el-input v-model="addBookForm.inventory" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" :label-width="addBookFormLabelWidth">
+          <el-input type="textarea" autosize v-model="addBookForm.intro" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -104,13 +113,22 @@
           <el-input v-model="editBookForm.author" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="ISBN" :label-width="editBookFormLabelWidth">
-          <el-input v-model="editBookForm.isbn" autocomplete="off"></el-input>
+          <el-input v-model="editBookForm.isbn" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="单价" :label-width="editBookFormLabelWidth">
-          <el-input v-model="editBookForm.price" autocomplete="off"></el-input>
+        <el-form-item label="出版社" :label-width="editBookFormLabelWidth">
+          <el-input v-model="editBookForm.press" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="开本" :label-width="editBookFormLabelWidth">
+          <el-input v-model="editBookForm.booksize" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="出版时间" :label-width="editBookFormLabelWidth">
+          <el-input v-model="editBookForm.pubtime" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="库存" :label-width="editBookFormLabelWidth">
           <el-input v-model="editBookForm.inventory" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" :label-width="editBookFormLabelWidth">
+          <el-input type="textarea" autosize v-model="editBookForm.intro" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -129,20 +147,26 @@ export default {
       search: '',
       addBookFormVisible: false,
       addBookForm: {
-        name: '',
-        author: '',
-        isbn: '',
-        price: null,
-        inventory: null
+        name: null,
+        author: null,
+        isbn: null,
+        press: null,
+        booksize: null,
+        pubtime: null,
+        inventory: null,
+        intro: null
       },
       addBookFormLabelWidth: '100px',
       editBookFormVisible: false,
       editBookForm: {
-        name: '',
-        author: '',
-        isbn: '',
-        price: null,
-        inventory: null
+        name: null,
+        author: null,
+        isbn: null,
+        press: null,
+        booksize: null,
+        pubtime: null,
+        inventory: null,
+        intro: null
       },
       editBookFormLabelWidth: '100px'
     }
@@ -158,16 +182,23 @@ export default {
           bookName: this.addBookForm.name,
           bookAuthor: this.addBookForm.author,
           bookIsbn: this.addBookForm.isbn,
-          bookPrice: this.addBookForm.price,
+          bookPress: this.addBookForm.press,
+          bookSize: this.addBookForm.booksize,
+          bookPubtime: this.addBookForm.pubtime,
+          bookIntro: this.addBookForm.intro,
           bookInventory: this.addBookForm.inventory
         }
       })
+      location.reload()
     },
     clearBookForm () {
-      this.addBookForm.name = ''
-      this.addBookForm.author = ''
-      this.addBookForm.isbn = ''
-      this.addBookForm.price = null
+      this.addBookForm.name = null
+      this.addBookForm.author = null
+      this.addBookForm.isbn = null
+      this.addBookForm.press = null
+      this.addBookForm.booksize = null
+      this.addBookForm.pubtime = null
+      this.addBookForm.intro = null
       this.addBookForm.inventory = null
     },
     handleEdit (index, row) {
@@ -175,7 +206,10 @@ export default {
       this.editBookForm.name = row.bookname
       this.editBookForm.author = row.author
       this.editBookForm.isbn = row.isbn
-      this.editBookForm.price = row.price
+      this.editBookForm.press = row.press
+      this.editBookForm.booksize = row.size
+      this.editBookForm.pubtime = row.pubtime
+      this.editBookForm.intro = row.intro
       this.editBookForm.inventory = row.inventory
     },
     updateEdit () {
@@ -185,10 +219,14 @@ export default {
           bookName: this.editBookForm.name,
           bookAuthor: this.editBookForm.author,
           bookIsbn: this.editBookForm.isbn,
-          bookPrice: this.editBookForm.price,
+          bookPress: this.editBookForm.press,
+          bookSize: this.editBookForm.booksize,
+          bookPubtime: this.editBookForm.pubtime,
+          bookIntro: this.editBookForm.intro,
           bookInventory: this.editBookForm.inventory
         }
       })
+      location.reload()
     },
     show () {
       this.$axios.get('/books/showAll')
@@ -207,11 +245,11 @@ export default {
             bookIsbn: row.isbn
           }
         })
-        this.bookData.splice(index, 1)
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
+        location.reload()
       }).catch(() => {
         this.$message({
           type: 'info',
