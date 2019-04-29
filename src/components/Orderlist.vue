@@ -4,15 +4,34 @@
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
         <p id="subtitle">我的订单</p>
-        <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/logout">退出登录</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/orderlist">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/booklist">书籍浏览</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/userhome">首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>
 
     <br/>
+
+    <div class="block">
+      <el-date-picker
+        v-model="timevalue"
+        type="daterange"
+        align="right"
+        unlink-panels
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :default-time="['00:00:00', '23:59:59']"
+        :picker-options="pickerOptions"
+        value-format="timestamp">
+      </el-date-picker>
+    </div>
+
+    <el-button type="primary" class="block_button" @click="rangeSearch">查询时间范围内的订单</el-button>
+    <el-button class="block_button" @click="showOrder">显示全部订单</el-button>
 
     <el-table :data="orderData">
       <!--<el-table-column label="封面">-->
@@ -61,7 +80,35 @@ export default {
       search: '',
       orderData: [],
       orderDetailDialogVisible: false,
-      orderDetailData: []
+      orderDetailData: [],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
+      },
+      timevalue: ''
     }
   },
   mounted: function () {
@@ -85,14 +132,17 @@ export default {
           this.orderDetailData = response.data
         })
     },
-    handleChange (index, row) {
-      this.$axios.get('/cart/update', {
+    rangeSearch () {
+      console.log(typeof this.timevalue[0])
+      this.$axios.get('/order/findRange', {
         params: {
-          cartName: row.bookname,
-          cartIsbn: row.isbn,
-          cartAmount: row.amount
+          startTime: this.timevalue[0],
+          endTime: this.timevalue[1]
         }
       })
+        .then((response) => {
+          this.orderData = response.data
+        })
     }
   }
 }

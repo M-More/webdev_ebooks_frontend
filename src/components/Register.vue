@@ -4,6 +4,7 @@
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
         <p id="subtitle">新用户注册</p>
+        <el-button type="text" class="head_nav_button"><a href="/home">返回首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>
@@ -111,7 +112,7 @@ export default {
       this.$axios.get('/users/create', {
         params: {
           userName: this.ruleForm01.name,
-          userPassword: this.ruleForm01.pass,
+          userPassword: this.$md5(this.ruleForm01.pass),
           userEmail: this.ruleForm01.email,
           userKind: '用户',
           userStatus: true

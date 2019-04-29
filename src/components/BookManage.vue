@@ -4,7 +4,7 @@
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
         <p id="subtitle">书籍管理</p>
-        <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/logout">退出登录</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="#">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="#">购物车</a></el-button>
         <el-button type="text" class="head_nav_button"><a @click="show">书籍浏览</a></el-button>
