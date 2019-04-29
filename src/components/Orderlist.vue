@@ -14,9 +14,7 @@
 
     <br/>
 
-    <el-table
-      :data="cartData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 100%">
+    <el-table :data="orderData">
       <!--<el-table-column label="封面">-->
         <!--<template slot-scope="scope">-->
           <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
@@ -41,11 +39,18 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="showDetail(scope.$index, scope.row)">查看订单详情</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog title="订单详情" :visible.sync="orderDetailDialogVisible">
+      <el-table :data="orderDetailData">
+        <el-table-column property="itemname" label="书名"></el-table-column>
+        <el-table-column property="itemisbn" label="ISBN"></el-table-column>
+        <el-table-column property="itemamount" label="数量"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -54,7 +59,9 @@ export default {
   data () {
     return {
       search: '',
-      cartData: []
+      orderData: [],
+      orderDetailDialogVisible: false,
+      orderDetailData: []
     }
   },
   mounted: function () {
@@ -64,31 +71,19 @@ export default {
     showOrder () {
       this.$axios.get('/order/findByUser')
         .then((response) => {
-          this.cartData = response.data
+          this.orderData = response.data
         })
     },
-    handleDelete (index, row) {
-      this.$confirm('确定从购物车中删除该书本?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$axios.get('/cart/delete', {
-          params: {
-            isbn: row.isbn
-          }
-        })
-        this.cartData.splice(index, 1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
+    showDetail (index, row) {
+      this.orderDetailDialogVisible = true
+      this.$axios.get('/orderitem/findByOrderNum', {
+        params: {
+          orderNum: row.num
+        }
       })
+        .then((response) => {
+          this.orderDetailData = response.data
+        })
     },
     handleChange (index, row) {
       this.$axios.get('/cart/update', {
