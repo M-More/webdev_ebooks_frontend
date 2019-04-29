@@ -8,7 +8,7 @@
         <el-button type="text" class="head_nav_button"><a href="/orderlist">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/booklist">书籍浏览</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/userhome">首页</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/user/home">首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>

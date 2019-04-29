@@ -7,7 +7,7 @@
         <el-button type="text" class="head_nav_button"><a href="/orderlist">我的订单</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
         <el-button type="text" class="head_nav_button"><a href="/booklist">书籍浏览</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/userhome">首页</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/user/home">首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>
@@ -116,20 +116,20 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        activeIndex: '1',
-        activeIndex2: '1',
-        activeNames: ['1', '2', '3', '4']
-      }
-    },
-    methods: {
-      handleSelect (key, keyPath) {
-        console.log(key, keyPath)
-      }
+export default {
+  data () {
+    return {
+      activeIndex: '1',
+      activeIndex2: '1',
+      activeNames: ['1', '2', '3', '4']
+    }
+  },
+  methods: {
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath)
     }
   }
+}
 </script>
 
 <style>
