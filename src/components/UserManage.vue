@@ -50,7 +50,8 @@
             active-color="#13ce66"
             inactive-color="#ff4949"
             active-text="正常"
-            inactive-text="禁用">
+            inactive-text="禁用"
+            @change="handleChange(scope.$index, scope.row)">
           </el-switch>
         </template>
       </el-table-column>
@@ -66,12 +67,32 @@ export default {
       search: ''
     }
   },
+  mounted: function () {
+    this.showUser()
+  },
   methods: {
     showUser () {
       this.$axios.get('/users/showAll')
         .then((response) => {
           this.userData = response.data
         })
+    },
+    handleChange (index, row) {
+      if (row.status === true) {
+        this.$axios.get('/users/update', {
+          params: {
+            userId: row.id,
+            userStatus: true
+          }
+        })
+      } else {
+        this.$axios.get('/users/update', {
+          params: {
+            userId: row.id,
+            userStatus: false
+          }
+        })
+      }
     }
   }
 }
