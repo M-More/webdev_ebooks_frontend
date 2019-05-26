@@ -4,10 +4,13 @@
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <p id="title">e-Book</p>
         <p id="subtitle">用户管理</p>
-        <el-button type="text" class="head_nav_button"><a href="#">退出登录</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="#">订单统计</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="#">书籍管理</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="#" @click="showUser">用户管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/logout">退出登录</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/orderlist">订单统计</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/cart">购物车</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/booklist">书籍浏览</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/bookmanage">书籍管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/usermanage">用户管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/home">首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>
@@ -78,20 +81,27 @@ export default {
         })
     },
     handleChange (index, row) {
-      if (row.status === true) {
-        this.$axios.get('/users/update', {
-          params: {
-            userId: row.id,
-            userStatus: true
-          }
+      if (row.kind === '管理员') {
+        this.$message({
+          message: '无法禁用管理员！',
+          type: 'warning'
         })
       } else {
-        this.$axios.get('/users/update', {
-          params: {
-            userId: row.id,
-            userStatus: false
-          }
-        })
+        if (row.status === true) {
+          this.$axios.get('/users/update', {
+            params: {
+              userId: row.id,
+              userStatus: true
+            }
+          })
+        } else {
+          this.$axios.get('/users/update', {
+            params: {
+              userId: row.id,
+              userStatus: false
+            }
+          })
+        }
       }
     }
   }

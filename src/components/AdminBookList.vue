@@ -5,10 +5,12 @@
         <p id="title">e-Book</p>
         <p id="subtitle">书籍列表</p>
         <el-button type="text" class="head_nav_button"><a href="/logout">退出登录</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/orderlist">我的订单</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/cart">购物车</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/booklist">书籍浏览</a></el-button>
-        <el-button type="text" class="head_nav_button"><a href="/user/home">首页</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/orderlist">订单统计</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/cart">购物车</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/booklist">书籍浏览</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/bookmanage">书籍管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/usermanage">用户管理</a></el-button>
+        <el-button type="text" class="head_nav_button"><a href="/admin/home">首页</a></el-button>
       </el-menu>
       <div class="line"></div>
     </div>
