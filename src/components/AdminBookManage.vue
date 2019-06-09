@@ -28,11 +28,11 @@
     <el-table
       :data="bookData.filter(data => !search || data.bookname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
-      <!--<el-table-column label="封面">-->
-      <!--<template slot-scope="scope">-->
-      <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
+      <el-table-column label="封面">
+        <template slot-scope="scope">
+        <img :src=scope.row.cover class="head_pic" width="120px"/>
+        </template>
+      </el-table-column>
       <el-table-column
         label="书名"
         sortable
@@ -112,6 +112,12 @@
 
     <el-dialog title="编辑书籍信息" :visible.sync="editBookFormVisible">
       <el-form :model="editBookForm">
+        <el-form-item label="封面" :label-width="editBookFormLabelWidth">
+          <img :src=editBookForm.cover class="head_pic" width="120px"/>
+        </el-form-item>
+        <el-upload class="cover_upload" action='' :on-change="changeCover" :limit="1" list-type="picture" :auto-upload="false">
+          <el-button type="primary">更改封面图片</el-button>
+        </el-upload>
         <el-form-item label="书名" :label-width="editBookFormLabelWidth">
           <el-input v-model="editBookForm.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -165,6 +171,7 @@ export default {
       addBookFormLabelWidth: '100px',
       editBookFormVisible: false,
       editBookForm: {
+        cover: null,
         name: null,
         author: null,
         isbn: null,
@@ -211,6 +218,7 @@ export default {
     },
     handleEdit (index, row) {
       this.editBookFormVisible = true
+      this.editBookForm.cover = row.cover
       this.editBookForm.name = row.bookname
       this.editBookForm.author = row.author
       this.editBookForm.isbn = row.isbn
@@ -224,6 +232,7 @@ export default {
       this.editBookFormVisible = false
       this.$axios.get('/books/update', {
         params: {
+          bookCover: this.editBookForm.cover,
           bookName: this.editBookForm.name,
           bookAuthor: this.editBookForm.author,
           bookIsbn: this.editBookForm.isbn,
@@ -284,6 +293,11 @@ export default {
     getFile (file, fileList) {
       this.getBase64(file.raw).then(res => {
         this.imageBase64 = res
+      })
+    },
+    changeCover (file, fileList) {
+      this.getBase64(file.raw).then(res => {
+        this.editBookForm.cover = res
       })
     }
   }

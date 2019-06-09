@@ -28,11 +28,11 @@
     <el-table
       :data="bookData.filter(data => !search || data.bookname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
-      <!--<el-table-column label="封面">-->
-        <!--<template slot-scope="scope">-->
-          <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
+      <el-table-column label="封面">
+        <template slot-scope="scope">
+          <img :src=scope.row.cover class="head_pic" width="120px"/>
+        </template>
+      </el-table-column>
       <el-table-column
         label="书名"
         sortable
@@ -71,6 +71,9 @@
 
     <el-dialog title="书籍详情" :visible.sync="bookDetailDialogVisible">
       <el-form label-position="right" class="demo-table-expand">
+        <el-form-item label="封面">
+          <img :src=detailedBook.cover class="head_pic" width="120px"/>
+        </el-form-item>
         <el-form-item label="书名">
           <span>{{ detailedBook.bookname }}</span>
         </el-form-item>
