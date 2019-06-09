@@ -75,6 +75,9 @@
 
     <el-dialog title="新增书籍" :visible.sync="addBookFormVisible">
       <el-form :model="addBookForm">
+        <el-upload class="cover_upload" action='' :on-change="getFile" :limit="1" list-type="picture" :auto-upload="false">
+          <el-button type="primary">选择封面上传</el-button>
+        </el-upload>
         <el-form-item label="书名" :label-width="addBookFormLabelWidth">
           <el-input v-model="addBookForm.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -171,7 +174,8 @@ export default {
         inventory: null,
         intro: null
       },
-      editBookFormLabelWidth: '100px'
+      editBookFormLabelWidth: '100px',
+      imageBase64: ''
     }
   },
   mounted: function () {
@@ -182,6 +186,7 @@ export default {
       this.addBookFormVisible = false
       this.$axios.get('/books/create', {
         params: {
+          bookCover: this.imageBase64,
           bookName: this.addBookForm.name,
           bookAuthor: this.addBookForm.author,
           bookIsbn: this.addBookForm.isbn,
@@ -258,6 +263,27 @@ export default {
           type: 'info',
           message: '已取消删除'
         })
+      })
+    },
+    getBase64 (file) {
+      return new Promise(function (resolve, reject) {
+        let reader = new FileReader()
+        let imgResult = ''
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+          imgResult = reader.result
+        }
+        reader.onerror = function (error) {
+          reject(error)
+        }
+        reader.onloadend = function () {
+          resolve(imgResult)
+        }
+      })
+    },
+    getFile (file, fileList) {
+      this.getBase64(file.raw).then(res => {
+        this.imageBase64 = res
       })
     }
   }
