@@ -35,9 +35,9 @@
 
     <el-table :data="orderData">
       <!--<el-table-column label="封面">-->
-        <!--<template slot-scope="scope">-->
-          <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
+      <!--</template>-->
       <!--</el-table-column>-->
       <el-table-column
         label="订单编号"

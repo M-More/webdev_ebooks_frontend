@@ -35,12 +35,16 @@
     <el-button type="primary" class="block_button" @click="rangeSearch">查询时间范围内的订单</el-button>
     <el-button class="block_button" @click="showOrder">显示全部订单</el-button>
 
-    <el-table :data="orderData">
-      <!--<el-table-column label="封面">-->
-        <!--<template slot-scope="scope">-->
-          <!--<img :src="scope.row.cover" class="head_pic" width="120px"/>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
+    <el-input
+      v-model="search"
+      size="medium"
+      clearable
+      placeholder="输入用户名过滤订单">
+      <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    </el-input>
+    <el-table
+      :data="orderData.filter(data => !search || data.username.toLowerCase()===(search.toLowerCase()))"
+      style="width: 100%">
       <el-table-column
         label="订单编号"
         prop="num">
